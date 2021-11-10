@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-const GameCreate = (props) => {
+const ReviewCreate = (props) => {
   const [game, setGame] = useState("");
   const [post, setPost] = useState("");
   const [image, setImage] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3000/game/create", {
+    fetch("http://localhost:3000/review/create", {
       method: "POST",
-      body: JSON.stringify({ game: { game: game, post: post, image: image } }),
+      body: JSON.stringify({ review: { game: game, post: post, image: image } }),
       headers: new Headers({
         "Content-Type": "application/json",
         Authorization: props.token,
@@ -20,12 +20,12 @@ const GameCreate = (props) => {
         setGame("");
         setPost("");
         setImage("");
-        props.fetchGames();
+        props.fetchReviews();
       });
   };
   return (
     <>
-      <h3>Game</h3>
+      <h3>Review</h3>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label htmlFor="game" />
@@ -59,4 +59,4 @@ const GameCreate = (props) => {
     </>
   );
 };
-export default GameCreate;
+export default ReviewCreate;

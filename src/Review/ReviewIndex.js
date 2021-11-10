@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
-import GameCreate from "./GameCreate";
-import GameTable from "./GameTable";
-import GameEdit from "./GameEdit";
+import ReviewCreate from "./ReviewCreate";
+import ReviewTable from "./ReviewTable";
+import ReviewEdit from "./ReviewEdit";
 
-const GameIndex = (props) => {
-  const [games, setGames] = useState([]);
+const ReviewIndex = (props) => {
+  const [reviews, setReviews] = useState([]);
   const [updateActive, setUpdateActive] = useState(false);
-  const [gameToUpdate, setGameToUpdate] = useState([]);
+  const [reviewToUpdate, setReviewToUpdate] = useState([]);
 
-  const editUpdateGame = (game) => {
-    setGameToUpdate(game);
-    console.log(game);
+  const editUpdateReview = (review) => {
+    setReviewToUpdate(review);
+    console.log(review);
   };
   const updateOn = () => {
     setUpdateActive(true);
@@ -20,8 +20,8 @@ const GameIndex = (props) => {
     setUpdateActive(false);
   };
 
-  const fetchGames = () => {
-    fetch("http://localhost:3000/game/get", {
+  const fetchReviews = () => {
+    fetch("http://localhost:3000/review/get", {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -30,36 +30,36 @@ const GameIndex = (props) => {
     })
       .then((res) => res.json())
       .then((logData) => {
-        setGames(logData);
+        setReviews(logData);
         console.log(logData);
       });
   };
   useEffect(() => {
-    fetchGames();
+    fetchReviews();
   }, []);
   return (
     <Container>
       <Row>
         <Col md="3">
-          <GameCreate fetchGames={fetchGames} token={props.token} />
+          <ReviewCreate fetchReviews={fetchReviews} token={props.token} />
         </Col>
         <Col md="9">
           <h2>
-            <GameTable
-              games={games}
-              editUpdateGame={editUpdateGame}
+            <ReviewTable
+              reviews={reviews}
+              editUpdateReview={editUpdateReview}
               updateOn={updateOn}
-              fetchGames={fetchGames}
+              fetchReviews={fetchReviews}
               token={props.token}
             />
           </h2>
         </Col>
         {updateActive ? (
-          <GameEdit
-            gameToUpdate={gameToUpdate}
+          <ReviewEdit
+            reviewToUpdate={reviewToUpdate}
             updateOff={updateOff}
             token={props.token}
-            fetchGames={fetchGames}
+            fetchReviews={fetchReviews}
           />
         ) : (
           <></>
@@ -68,4 +68,4 @@ const GameIndex = (props) => {
     </Container>
   );
 };
-export default GameIndex;
+export default ReviewIndex;
