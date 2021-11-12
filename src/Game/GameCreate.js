@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody } from 'reactstrap';
 const GameCreate = (props) => {
   const [game, setGame] = useState("");
   const [post, setPost] = useState("");
   const [image, setImage] = useState("");
+  const [modal, setModal] = useState(false)
+  const toggle = () => setModal(!modal)
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch("http://localhost:3000/game/create", {
@@ -25,6 +28,14 @@ const GameCreate = (props) => {
   };
   return (
     <>
+    
+      <Button color="danger" onClick={toggle}>
+        Track Food
+      </Button>
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Track Food</ModalHeader>
+        <ModalBody>
+
       <h3>Game</h3>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
@@ -56,6 +67,8 @@ const GameCreate = (props) => {
         </FormGroup>
         <Button type="submit">Click to Submit</Button>
       </Form>
+      </ModalBody>
+      </Modal>
     </>
   );
 };
